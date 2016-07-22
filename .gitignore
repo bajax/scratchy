@@ -11,3 +11,6 @@ build/Release
 node_modules
 npm-debug.log
 public/gen/
+media/js/*.js
+media/css/*.css
+media/css/*.css.map
