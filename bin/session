@@ -1,0 +1,6 @@
+#!/opt/local/bin/bash
+# So I can double click to open a terminal.  Lazy as shit.
+clear
+export PATH=$(dirname $0):$PATH
+cd $(dirname $0)/../
+bash
