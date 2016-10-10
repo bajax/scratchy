@@ -1,10 +1,18 @@
 var twgl = require('twgl.js');
-var vs = require('./shaders/example.vert');
-var fs = require('./shaders/example.frag');
+var vs   = require('./shaders/flat.vert');
+var fs   = require('./shaders/brush.frag');
 
-var gl          = twgl.getWebGLContext(document.getElementById('main'));
-var program     = twgl.createProgramFromSources(gl, [vs(), fs()]);
-var programInfo = twgl.createProgramInfoFromProgram(gl, program);
+var canvas      = global.canvas      = document.getElementById('main'); 
+var gl          = global.gl          = twgl.getWebGLContext(canvas);
+var program     = global.program     = twgl.createProgramFromSources(gl, [vs(), fs()]);
+var programInfo = global.programInfo = twgl.createProgramInfoFromProgram(gl, program);
+
+var x, y, button;
+button = new Uint8Array(4); 
+
+window.addEventListener('mousemove',  (e) => {x = e.layerX; y = e.layerY; });
+window.addEventListener('mousedown',  (e) => {button[e.button] = true;    });
+window.addEventListener('mouseup',    (e) => {button[e.button] = false;   });
 
 var arrays = 
 {
@@ -12,26 +20,35 @@ var arrays =
 };
 var bufferInfo = twgl.createBufferInfoFromArrays(gl, arrays);
 
+var lastp = [0,0];
+
 function render(time)
 {
+	if (!button[0])
+	{
+		lastp = [x, gl.canvas.height - y ];
+		requestAnimationFrame(render);
+		return;
+	}
+
 	twgl.resizeCanvasToDisplaySize(gl.canvas);
 	gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 
-	var uniforms = 
-	{
-		time: time * 0.001,
-		resolution: [gl.canvas.width, gl.canvas.height],
-	};
-
-	global.uniforms = uniforms;
-
 	gl.useProgram(programInfo.program);
+	
 	twgl.setBuffersAndAttributes(gl, programInfo, bufferInfo);
-	twgl.setUniforms(programInfo, uniforms);
+	twgl.setUniforms(programInfo,
+	{
+		resolution : [gl.canvas.width, gl.canvas.height],
+		loc_from   : lastp,
+		loc_to     : lastp = [x, gl.canvas.height - y ],
+		size       : 10,
+		spread     : 100,
+		color      : [1,1,1,1],
+	});
+
 	twgl.drawBufferInfo(gl, gl.TRIANGLES, bufferInfo);
 
 	requestAnimationFrame(render);
 }
-
-global.uniforms = [];
 requestAnimationFrame(render);

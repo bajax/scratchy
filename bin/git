@@ -1,6 +1,0 @@
-#!/opt/local/bin/bash
-# opens tower on double-click.  Lazy as shit.
-clear
-export PATH=$(dirname $0):$PATH
-cd $(dirname $0)/../
-gittower .

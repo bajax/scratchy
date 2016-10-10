@@ -14,3 +14,5 @@ public/gen/
 media/js/*.js
 media/css/*.css
 media/css/*.css.map
+._*
+Icon*

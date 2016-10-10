@@ -27,7 +27,14 @@ function app_init (config)
 			indentedSyntax : true,
 			sourceMap      : true,
 		}));
-		app.use('/js', require('browserify-middleware')('./client', {transform:'browserify-shader'}));
+		app.use('/js', require('browserify-middleware')('./client', 
+			{
+				transform:
+				[
+					'browserify-shader', 
+					['babelify', {presets: ['es2015',]} ], 
+				],
+			}));
 	}
 
 
