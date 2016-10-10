@@ -1,6 +1,7 @@
 doctype html
 html(lang="en")
 	title= title
-	link(rel='stylesheet', href='/css/viewport.css')
-div
+	block styles
+	link(rel='stylesheet', href='/css/layout.css')
+div(class='content')
 	block content

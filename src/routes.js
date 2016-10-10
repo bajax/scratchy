@@ -20,11 +20,12 @@ function routes (router)
 			});
 	});
 
-	router.get('/viewport', (req, res, next) =>
+	router.get('/gl/:page', (req, res, next) =>
 	{
-		res.render('viewport', 
+		res.render('gl', 
 			{
-				title :'ViewPort',
+				title : req.params.page,
+				page  : req.params.page
 			});
 	});
 
