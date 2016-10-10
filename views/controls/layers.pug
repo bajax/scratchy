@@ -1,0 +1,11 @@
+div(id='layer', class='control')
+	div(class='top-bar') Layers
+	
+	canvas(id='layer_preview')
+
+	each layer in layers
+		div(id=layer.id)
+			canvas
+
+	input(id='layer_add', type='button', value='Add Layer')
+	input(id='layer_delete', type='button', value='Delete Layer')

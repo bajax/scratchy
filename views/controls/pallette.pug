@@ -1,0 +1,40 @@
+div(id='pallette' class='control')
+	div(class='top-bar') Color Pallette
+	
+	canvas(id='color_gamut')
+
+	div(id='rgb' class='tab' tabgroup='color_mode')
+		span(class='tab-label') RGB
+		label R:
+			input(id='r' type='range')
+		label G:
+			input(id='g' type='range') 
+		label B:
+			input(id='b' type='range')
+
+	div(id='hsb' class='tab' tabgroup='color_mode')
+		span(class='tab-label') HSB
+		label H:
+			input(id='h' type='range')
+		label S:
+			input(id='s' type='range')
+		label B:
+			input(id='br' type='range')
+
+	div(id='cymk' class='tab' tabgroup='color_mode')
+		span(class='tab-label') CYMK
+		label C:
+			input(id='c' type='range')
+		label Y:
+			input(id='y' type='range') 
+		label M:
+			input(id='m' type='range') 
+		label K:
+			input(id='k' type='range') 
+	
+	div(id='swatches')
+		each swatch in swatches
+			div(class='swatch' style='background-color:' + swatch + ';')
+	
+	div(id='primary'   class='swatch' style='background-color:' + primary + ';')
+	div(id='secondary' class='swatch' style='background-color:' + secondary + ';')
