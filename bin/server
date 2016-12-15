@@ -3,4 +3,4 @@
 clear
 export PATH=$(dirname $0):$PATH
 cd $(dirname $0)/../
-supervisor -e 'pug|js' ./src/server
+supervisor -e 'pug|js' ./src/index
