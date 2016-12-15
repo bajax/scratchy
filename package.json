@@ -28,5 +28,7 @@
     "socket.io": "^1.7.2",
     "twgl.js": "^1.7.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "chai": "^3.5.0"
+  }
 }
