@@ -26,6 +26,8 @@ A group-oriented canvas with between 5 and 20 participants.  You must draw quick
 
 Anything-goes, there's no rules other than basic courtesy.  Anonymity is optional.  Spontaneity is the name of the game, and adding to others' work is encouraged.  The rule of thumb is that you judge others on their efforts and intentions, and only move to throw someone out if they become obnoxious.
 
+In this mode, anons are given a random number or symbol that you can use to file complaints against them if they start scribbling over everything or being disruptive.  If a user receives too many complaints, they are thrown out.  Their unique identifier will be randomized and re-assigned whenever the canvas is cleared.
+
 It shouldn't be too difficult to capture exceptionally good scratch sessions and replay them later.
 
 ### Oekaki
@@ -44,10 +46,12 @@ Because each instance is meant for small groups, I am not going to put too much 
 
 Each user has a pseudonym and email.  I'll add a short bio, a form where you can put links to other websites and MAYBE an avatar/cover image.  Other than that, the user page will consist of a gallery of images they've saved there.
 
+I'm on the fence about whether to support such features as likes.  Maybe I should just make this stuff sharable on Twitter/FB/Gnusocial and let them handle the social features.
+
 ### Anonymity
 I think anonymity is important.  I don't think it encourages bad behavior-- at least not any more than forcing everyone to use their real names.  When you're anonymous, you're more likely to tell the truth, create things that you wouldn't if you had to have some kind of traceable identity attached.
 
-That being said, it's important to be able to keep out disruptive influences, so I'll be putting a lot of effort into rate limiting, IP address and range banning, and sharing information between server instances.  All optional and left up to the instance admin of course.
+That being said, it's important to be able to keep out disruptive influences, so I'll be putting a lot of effort into rate limiting, IP address and range banning, and sharing information between server instances.  If you really *must* require registration, that will be supported as well. Everything is optional and left up to the instance admin.
 
 ### WebGL
 Rendering will be handled by WebGL.  Most people have that at least.
