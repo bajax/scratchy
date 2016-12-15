@@ -1,12 +1,84 @@
 #!/usr/bin/env node
 'use strict';
-var debug = require('debug')('scratchy:server');
-var reload = require('reload');
+var debug       = require('debug')('scratchy:server');
+var reload      = require('reload');
+var http        = require('http');
+var config      = require('../config')[process.env.deployment_level || 'development'];
+var app         = require('express')();
+var routes      = require('./routes.js')(config);
+var body_parser = require('body-parser');
 
-var http  = require('http');
+app.set('views', config.dirs.views);
+app.set('view engine', 'pug');
 
-var config = require('../config')[process.env.deployment_level || 'development'];
-var app    = require('./app')(config);
+app.use(require('morgan')('dev'));
+
+app.use(body_parser.json());
+app.use(body_parser.urlencoded({ extended: false }));
+
+app.use(require('cookie-parser')());
+if (config.env === 'development')
+{
+	app.use('/css', require('node-sass-middleware')(
+	{
+		src            : config.dirs.sass,
+		dest           : config.dirs.css,
+		root           : config.dirs.root,
+		indentedSyntax : true,
+		sourceMap      : true,
+	}));
+	app.use('/js', require('browserify-middleware')('./client', 
+		{
+			transform:
+			[
+				'browserify-shader', 
+				['babelify', {presets: ['es2015',]} ], 
+			],
+		}));
+}
+
+
+
+app.use(express.static(config.dirs.media));
+app.use(express.static(config.dirs.static));
+app.use(express.static(__dirname + '/../bower_components/'));
+
+app.use('/', routes(express.Router({strict: true})));
+
+app.use((req, res, next) =>
+{
+	var err = new Error('Not Found');
+	err.status = 404;
+	next(err);
+});
+
+//stacktrace or not?
+switch (config.env)
+{
+	case 'development':
+		app.use((err, req, res, next) =>
+		{
+			res.status(err.status || 500);
+			res.render('error', 
+			{
+				message : err.message,
+				error   : err
+			});
+		});
+		break;
+	case 'deployment':
+	default:
+		app.use((err, req, res, next) =>
+		{
+			res.status(err.status || 500);
+			res.render('error', 
+			{
+				message : err.message,
+				error   : {}
+			});
+		});
+		break;
+}
 
 var port = parseInt(config.listen, 10) || config.listen;
 
@@ -51,4 +123,3 @@ server.on('listening', function on_listening ()
 		: 'port ' + addr.port;
 	debug('Listening on ' + bind);
 });
-
