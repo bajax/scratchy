@@ -1,6 +1,7 @@
 'use strict';
 var expect   = require('chai').expect;
 var Presence = require('../../src/drawing/Presence');
+var Enum     = require('../../src/utils/Enum');
 
 var dummy_coordinator =
 {

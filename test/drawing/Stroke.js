@@ -1,15 +1,49 @@
 'use strict';
 var expect = require('chai').expect;
 var Stroke = require('../../src/drawing/Stroke');
+var Enum   = require('../../src/utils/Enum');
 
 var dummy_coordinator =
 {
-	e : Enum('USER_JOIN', 'USER_PART', 'STROKE_ADD', 'CLEAR_CANVAS', 'PUBLISH_HANDLES', 'CONSUME_HANDLES', 'CONSTRUCT', 'DESTRUCT'),
+	E : Enum('USER_JOIN', 'USER_PART', 'STROKE_ADD', 'CLEAR_CANVAS', 'PUBLISH_HANDLES', 'CONSUME_HANDLES', 'CONSTRUCT', 'DESTRUCT'),
+	on : (e, f) => 
+	{
+
+	},
+	emit : (e) =>
+	{
+		this.ev[e]();
+	},
+	on : (e, f) => 
+	{
+		this.ev[e] = f;
+	},
+	removeAll : (e) =>
+	{
+		ev = {};
+	},
 };
 
 var dummy_presence =
 {
-	e : Enum('REPOSITION', 'PEN_DOWN', 'PEN_MOVE', 'PEN_UP', 'PEN_CANCEL', 'TOOL_CHANGE', 'ENTER', 'LEAVE'),
+	E : Enum('REPOSITION', 'PEN_DOWN', 'PEN_MOVE', 'PEN_UP', 'PEN_CANCEL', 'TOOL_CHANGE', 'ENTER', 'LEAVE'),
+	ev : {},
+	tool : 
+	{
+		
+	},
+	emit : (e) =>
+	{
+		this.ev[e]();
+	},
+	on : (e, f) => 
+	{
+		this.ev[e] = f;
+	},
+	removeAll : (e) =>
+	{
+		ev = {};
+	},
 };
 
 describe('Stroke', () =>

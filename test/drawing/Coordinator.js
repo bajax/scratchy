@@ -1,14 +1,16 @@
 'use strict';
 var expect      = require('chai').expect;
 var Coordinator = require('../../src/drawing/Coordinator');
+var Enum        = require('../../src/utils/Enum');
 
 var dummy_dispatcher = 
 {
-
+	
 }
 
 var coordinator_params =
 {
+	
 }
 
 describe('Coordinator', () =>
