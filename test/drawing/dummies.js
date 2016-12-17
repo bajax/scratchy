@@ -31,3 +31,4 @@ module.exports =
 	presence    : dummy_presence,
 	coordinator : dummy_coordinator,
 }
+

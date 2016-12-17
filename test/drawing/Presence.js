@@ -1,22 +1,19 @@
 'use strict';
-var expect   = require('chai').expect;
-var Presence = require('../../src/drawing/Presence');
-var Enum     = require('../../src/utils/Enum');
+const expect   = require('chai').expect;
+const Presence = require('../../src/drawing/Presence');
 
-var dummy_coordinator =
-{
-}
+const c = require('./dummies').coordinator;
 
 describe('Presence', () =>
 {
 	it('should instantiate', () =>
 	{
-		throw new Error('test not written');
+		
 	});
 
 	it('should listen for update events from the client (via coordinator)', () =>
 	{
-		throw new Error('test not written');
+		
 	});
 
 	it('should forward PEN_DOWN events to the stroke below it', () =>
