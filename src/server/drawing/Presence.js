@@ -2,7 +2,6 @@
  * Represents the presence of a user in a room.  Talks directly to a websocket 
  * for the individual user.
  */
-const Enum   = require('../../shared/utils/Enum');
 const EVENTS = require('../../shared/EventTypes').PRESENCE;
 
 module.exports = function Presence (params, c)

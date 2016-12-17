@@ -1,3 +1,4 @@
+const Enum = require('./utils/Enum');
 module.exports = 
 {
 	COORDINATOR : Enum(

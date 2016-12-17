@@ -1,7 +1,6 @@
 /**
  * Represents a canvas on the server-side.  Might also be thought of as a "room"
  */
-const Enum   = require('../../shared/utils/Enum');
 const EVENTS = require('../../shared/EventTypes').COORDINATOR;
 
 
