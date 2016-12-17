@@ -1,12 +1,10 @@
-/** 
- * GUI Editor.  Allows for editing the game world (the megastructure).
- */
 'use strict';
-var Item;
-var ItemEditor;
 
-module.exports = (config) =>
+var config;
+
+module.exports = (_config) =>
 {
+	config = _config;
 	return routes;
 }
 
@@ -81,6 +79,13 @@ function routes (router)
 				],
 				layers    : [{id: 1}]
 
+			});
+	});
+	
+	router.get('/socket', (req, res, next) =>
+	{
+		res.render('socket', 
+			{
 			});
 	});
 
