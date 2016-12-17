@@ -5,8 +5,8 @@ $(window).on('beforeunload', function(){
     socket.close();
 });
 
-socket.on('connect',       ()=> console.log('connected'));
-socket.on('test',         ()=> console.log('test from server'));
+socket.on('connect', ()=> console.log('connected'));
+socket.on('test',    ()=> console.log('test from server'));
 
 function d ()
 {
