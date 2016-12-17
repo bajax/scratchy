@@ -7,6 +7,17 @@ module.exports = (_config) =>
 
 function sockets (io)
 {
-	io.on('connection',    (socket) => console.log('a user connected'));
-	io.on('disconnection', (socket) => console.log('a user disconnected'));
+	io.on('connection', (socket) => 
+	{
+		console.log('a user connected');
+		socket.on('disconnect', socket => console.log('a user disconnected'));
+
+		socket.on('test', () => console.log('test from client'));
+
+		setInterval(() => 
+		{
+			socket.emit('test');
+		}, 1000 * 2);
+
+	});
 }

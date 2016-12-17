@@ -94,6 +94,8 @@ module.exports = function server(config)
 	if (config.env === 'development') 
 		reload(server, app);
 
+	sockets(io(server));
+
 	server.listen(port);
 
 	server.on('error', function on_error (error)
@@ -129,8 +131,6 @@ module.exports = function server(config)
 		debug('Listening on ' + bind);
 	});
 	
-	sockets(io(server));
-
 	return server;
 
 
