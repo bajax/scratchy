@@ -2,13 +2,17 @@
 'use strict';
 module.exports = function server(config)
 {
-	var debug       = require('debug')('scratchy:server');
-	var reload      = require('reload');
-	var http        = require('http');
-	var express     = require('express');
-	var app         = express();
-	var routes      = require('./routes.js')(config);
-	var body_parser = require('body-parser');
+	const debug       = require('debug')('scratchy:server');
+	const reload      = require('reload');
+	const http        = require('http');
+	const express     = require('express');
+	const app         = express();
+	const io          = require('socket.io');
+	const body_parser = require('body-parser');
+
+	const routes      = require('./routes.js')(config);
+	const sockets     = require('./sockets.js')(config);
+
 
 	app.set('views', config.dirs.views);
 	app.set('view engine', 'pug');
@@ -123,7 +127,10 @@ module.exports = function server(config)
 			: 'port ' + addr.port;
 		debug('Listening on ' + bind);
 	});
+	
+	sockets(io(server));
+
 	return server;
 
-	var io = require('socket.io')(server);
+
 }

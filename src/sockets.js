@@ -1,3 +1,12 @@
-var io = require('socket.io')(server);
+var config;
+module.exports = (_config) =>
+{
+	config = _config;
+	return sockets;
+}
 
-module.exports = function () {};
+function sockets (io)
+{
+	io.on('connection',    (socket) => console.log('a user connected'));
+	io.on('disconnection', (socket) => console.log('a user disconnected'));
+}
