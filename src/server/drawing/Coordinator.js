@@ -1,7 +1,8 @@
 /**
  * Represents a canvas on the server-side.  Might also be thought of as a "room"
  */
-const Enum = require('../../shared/utils/Enum');
+const Enum   = require('../../shared/utils/Enum');
+const EVENTS = require('../../shared/EventTypes').COORDINATOR;
 
 
 module.exports = function Coordinator (params, dispatcher)
@@ -25,18 +26,7 @@ module.exports = function Coordinator (params, dispatcher)
 
 }
 
-var COORDINATOR_EV = Enum(
-	'USER_JOIN',
-	'USER_PART',
-	'STROKE_ADD',
-	'CLEAR_CANVAS',
-	'PUBLISH_HANDLES',
-	'CONSUME_HANDLES',
-	'CONSTRUCT',
-	'DESTRUCT'
-);
-
 module.exports.prototype = 
 {
-	E : COORDINATOR_EV,
+	E : EVENTS,
 }
