@@ -2,11 +2,12 @@
  * Represents the presence of a user in a room.  Talks directly to a websocket 
  * for the individual user.
  */
-var Enum = require('../utils/Enum');
+const Enum = require('../../shared/utils/Enum');
 
 module.exports = function Presence (params, c)
 {
-	var self = this;
+	const self = this;
+	
 	var x;
 	var y;
 	var user;

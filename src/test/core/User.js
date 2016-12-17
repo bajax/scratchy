@@ -1,6 +1,6 @@
 'use strict';
 var expect = require('chai').expect;
-var User   = require('../../src/core/User');
+var User   = require('../../server/core/User');
 
 describe('User', () =>
 {

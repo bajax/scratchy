@@ -1,6 +1,6 @@
 'use strict';
 var expect       = require('chai').expect;
-var EnumCompound = require('../../src/utils/EnumCompound');
+var EnumCompound = require('../../shared/utils/EnumCompound');
 
 describe('EnumCompound', function ()
 {

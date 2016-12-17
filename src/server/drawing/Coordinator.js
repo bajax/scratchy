@@ -1,7 +1,7 @@
 /**
  * Represents a canvas on the server-side.  Might also be thought of as a "room"
  */
-var Enum = require('../utils/Enum');
+const Enum = require('../../shared/utils/Enum');
 
 
 module.exports = function Coordinator (params, dispatcher)

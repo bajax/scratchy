@@ -1,6 +1,6 @@
 'use strict';
 var expect     = require('chai').expect;
-var Dispatcher = require('../../src/core/Dispatcher');
+var Dispatcher = require('../../server/core/Dispatcher');
 
 describe('Dispatcher', () =>
 {

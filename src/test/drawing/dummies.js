@@ -2,7 +2,7 @@
  * Dummy objects -- for testing with dependency injection!  Is nice!
  */
 const EventEmitter = require('events');
-const Enum         = require('../../src/utils/Enum');
+const Enum         = require('../../shared/utils/Enum');
 
 var cee = new EventEmitter();
 var dummy_coordinator =

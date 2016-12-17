@@ -1,6 +1,6 @@
 'use strict';
 const expect       = require('chai').expect;
-const Stroke       = require('../../src/drawing/Stroke');
+const Stroke       = require('../../server/drawing/Stroke');
 
 const c = require('./dummies').coordinator;
 const p = require('./dummies').presence;

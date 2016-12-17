@@ -1,6 +1,6 @@
 'use strict';
 var expect = require('chai').expect;
-var Lobby  = require('../../src/core/Lobby');
+var Lobby  = require('../../server/core/Lobby');
 
 describe('Lobby', () =>
 {

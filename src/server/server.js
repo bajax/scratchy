@@ -33,7 +33,7 @@ module.exports = function server(config)
 			indentedSyntax : true,
 			sourceMap      : true,
 		}));
-		app.use('/js', require('browserify-middleware')('./client', 
+		app.use('/js', require('browserify-middleware')('./src/client/', 
 			{
 				transform:
 				[
@@ -43,9 +43,10 @@ module.exports = function server(config)
 			}));
 	}
 
-	app.use(express.static(config.dirs.media));
-	app.use(express.static(config.dirs.static));
-	app.use(express.static(__dirname + '/../bower_components/'));
+	if (config.env === 'development')
+		app.use(express.static(config.dirs.volatile));
+	if (config.env === 'development')
+		app.use(express.static(config.dirs.static));
 
 	app.use('/', routes(express.Router({strict: true})));
 

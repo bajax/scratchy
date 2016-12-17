@@ -15,11 +15,11 @@ module.exports =
 		},
 		dirs :
 		{
-			static : path.join(__dirname, 'static'),
-			media  : path.join(__dirname, 'media'),
-			views  : path.join(__dirname, 'views'),
-			sass   : path.join(__dirname, 'client/sass'),
-			css    : path.join(__dirname, 'media/css'),
+			static   : path.join(__dirname, 'res/static'),
+			volatile : path.join(__dirname, 'res/volatile'),
+			views    : path.join(__dirname, 'res/views'),
+			sass     : path.join(__dirname, 'res/sass'),
+			css      : path.join(__dirname, 'res/volatile/css'),
 		}
 	},
 	deployment :
@@ -34,11 +34,11 @@ module.exports =
 		},
 		dirs :
 		{
-			static : path.join(__dirname, 'res/static'),
-			media  : path.join(__dirname, 'res/media'),
-			views  : path.join(__dirname, 'res/views'),
-			sass   : path.join(__dirname, 'client/sass'),
-			css    : path.join(__dirname, 'media/css'),
+			static   : path.join(__dirname, 'res/static'),
+			volatile : path.join(__dirname, 'res/volatile'),
+			views    : path.join(__dirname, 'res/views'),
+			sass     : path.join(__dirname, 'res/sass'),
+			css      : path.join(__dirname, 'res/volatile/css'),
 		}
 	},
 }

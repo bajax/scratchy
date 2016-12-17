@@ -11,8 +11,8 @@ build/Release
 node_modules
 npm-debug.log
 public/gen/
-media/js/*.js
-media/css/*.css
-media/css/*.css.map
+res/volatile/js/*.js
+res/volatile/css/*.css
+res/volatile/css/*.css.map
 ._*
 Icon*
