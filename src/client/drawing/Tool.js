@@ -1,4 +1,4 @@
-const TOOLS = require('../../shared/ToolDefs').TOOLS;
+const TOOLS = require('../../shared/tool_defs').TOOLS;
 /**
  * Represents a client-side tool definition.
  */
