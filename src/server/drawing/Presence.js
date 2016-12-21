@@ -2,9 +2,9 @@
  * Represents the presence of a user in a room.  Talks directly to a websocket 
  * for the individual user.
  */
-const EVENTS = require('../../shared/event_types').PRESENCE;
+const E = require('../../shared/event_types').PRESENCE;
 
-module.exports = function Presence (params, c)
+module.exports = function Presence (params, c, s)
 {
 	const self = this;
 	
@@ -12,11 +12,25 @@ module.exports = function Presence (params, c)
 	var y;
 	var user;
 	var destructed = false;
-
+	/**
+	 * Define all of this object's events in one place, to avoid future bugs 
+	 * eg forgetting to unregister them.
+	 * 0 = which emitter receives the event
+	 * 1 = the event's ID
+	 * 2 = the function to run
+	 */
 	var events = 
 	[
-		[c.E.CLEAR_CANVAS, cancel],
-		[c.E.DESTRUCT,     cancel],
+		[c, c.E.JOIN,         (...args) => s.emit(E.JOIN, ...args),         ],
+		[c, c.E.PART,         (...args) => s.emit(E.PART, ...args),         ],
+		[c, c.E.CLEAR_CANVAS, onClearCanvas,                                ],
+		[c, c.E.DESTRUCT,     (...args) => s.emit(E.KICK, ...args)          ],
+		[s, E.PEN_DOWN,       startStroke                                   ],
+		[s, E.PEN_MOVE,       (...args) => emit(E.PEN_MOVE, ...args),       ],
+		[s, E.PEN_UP,         (...args) => emit(E.PEN_UP, ...args),         ],
+		[s, E.PEN_CANCEL,     (...args) => emit(E.PEN_CANCEL, ...args),     ],
+		[s, E.REPOSITION,     relayPosition                                 ],
+		[s, E.TOOL_CHANGE,    changeTool                                    ],
 	];
 
 	var tool =
@@ -32,7 +46,24 @@ module.exports = function Presence (params, c)
 	 */
 	function startStroke(initial_vert)
 	{
+		
+	}
 
+	/**
+	 * Relays position information.
+	 */
+	function relayPosition (_x, _y)
+	{
+		x = _x;
+		y = _y;
+	}
+
+	/**
+	 * Changes the current tooldef
+	 */
+	function changeTool ()
+	{
+		
 	}
 
 	/**
@@ -40,25 +71,24 @@ module.exports = function Presence (params, c)
 	 */
 	function allOn()
 	{
-		events.forEach(event => c.on(event[0], event[1]));
+		events.forEach(event => event[0].on(event[1], event[2]));
 	}
 
 	/**
 	 * Unregister all events.
 	 */
 	function allOff()
-	{
-		events.forEach(event => c.on(event[0], event[1]));
+	{	
+		events.forEach(event => event[0].off(event[1], event[2]));
 	}
 
 	Object.defineProperty(self, 'x',          { get:()=>x          });
 	Object.defineProperty(self, 'y',          { get:()=>y          });
 	Object.defineProperty(self, 'user',       { get:()=>user       });
 	Object.defineProperty(self, 'destructed', { get:()=>destructed });
-
 }
 
 module.exports.prototype = 
 {
-	E : EVENTS,
+	E : E,
 }

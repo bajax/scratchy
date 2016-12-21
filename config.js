@@ -18,7 +18,7 @@ module.exports =
 			static   : path.join(__dirname, 'res/static'),
 			volatile : path.join(__dirname, 'res/volatile'),
 			views    : path.join(__dirname, 'res/views'),
-			sass     : path.join(__dirname, 'res/sass'),
+			sass     : path.join(__dirname, 'res/static/sass'),
 			css      : path.join(__dirname, 'res/volatile/css'),
 		}
 	},
@@ -37,7 +37,7 @@ module.exports =
 			static   : path.join(__dirname, 'res/static'),
 			volatile : path.join(__dirname, 'res/volatile'),
 			views    : path.join(__dirname, 'res/views'),
-			sass     : path.join(__dirname, 'res/sass'),
+			sass     : path.join(__dirname, 'res/static/sass'),
 			css      : path.join(__dirname, 'res/volatile/css'),
 		}
 	},

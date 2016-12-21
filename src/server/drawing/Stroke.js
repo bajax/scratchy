@@ -19,13 +19,13 @@ module.exports = function Stroke (params, p, c)
 	 */
 	var events = 
 	[
-		[c, c.E.CLEAR_CANVAS, cancel],
-		[c, c.E.DESTRUCT,     cancel],
-		[p, p.E.PEN_MOVE,     receiveVertex],
-		[p, p.E.PEN_UP,       finish],
-		[p, p.E.PEN_CANCEL,   cancel],
-		[p, p.E.TOOL_CHANGE,  cancel],
-		[p, p.E.LEAVE,        cancel],
+		[c, c.E.CLEAR_CANVAS, cancel,        ],
+		[c, c.E.DESTRUCT,     cancel,        ],
+		[p, p.E.PEN_MOVE,     receiveVertex, ],
+		[p, p.E.PEN_UP,       finish,        ],
+		[p, p.E.PEN_CANCEL,   cancel,        ],
+		[p, p.E.TOOL_CHANGE,  cancel,        ],
+		[p, p.E.LEAVE,        cancel,        ],
 	];
 
 	/**
@@ -74,9 +74,9 @@ module.exports = function Stroke (params, p, c)
 		events.forEach(event => event[0].off(event[1], event[2]));
 	}
 
-	Object.defineProperty(self, 'vertices', {get:()=>vertices});
-	Object.defineProperty(self, 'tool',     {get:()=>tool});
-	Object.defineProperty(self, 'complete', {get:()=>complete});
+	Object.defineProperty(self, 'vertices', { get:()=>vertices });
+	Object.defineProperty(self, 'tool',     { get:()=>tool     });
+	Object.defineProperty(self, 'complete', { get:()=>complete });
 
 	allOn();
 }
