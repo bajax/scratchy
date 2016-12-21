@@ -1,7 +1,7 @@
 /**
  * Represents a canvas on the server-side.  Might also be thought of as a "room"
  */
-const EVENTS = require('../../shared/EventTypes').COORDINATOR;
+const EVENTS = require('../../shared/event_types').COORDINATOR;
 
 
 module.exports = function Coordinator (params, dispatcher)
