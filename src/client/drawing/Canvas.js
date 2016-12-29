@@ -1,7 +1,9 @@
 'use strict';
-const twgl = require('twgl.js');
-const vs   = require('../shaders/flat.vert');
-const fs   = require('../shaders/brushes/binary.frag');
+const twgl        = require('twgl.js');
+const vs          = require('../shaders/flat.vert');
+const fs          = require('../shaders/brushes/binary.frag');
+const ez_dispatch = require('../../shared/utils/ez_dispatch');
+const ez_respond  = require('../../shared/utils/ez_respond');
 
 /**
  * Represents a client-side canvas--manages the GL graphics context, and UI events.
@@ -24,15 +26,12 @@ module.exports = function Canvas (params)
 	const program_info  = twgl.createProgramInfoFromProgram(gl, program);
 	const strokes       = [];
 
-	require('../../shared/utils/traitResponder')(self,
+	ez_respond(self,
 	[
 		[c, c.E.CLEAR_CANVAS, onClearCanvas ],
 		[c, c.E.STROKE_ADD,   receiveStroke ],
 		[c, c.E.DESTRUCT,     destruct      ],
 	]);
-
-	require('../../shared/utils/traitEZDispatcher')(h);
-
 
 	/**
 	 * Clears strokes, and the canvas buffers.
@@ -90,22 +89,6 @@ module.exports = function Canvas (params)
 	self.allOn();
 
 	return self;
-}
-
-/**
- * Wraps any dispatcher, making it duck-type compliant with what we are using
- * (on, off, etc.)
- * Todo: Figure out if this is the right thing to do.
- */
-function EventWrapper(dispatcher_core)
-{
-
-}
-
-
-module.exports.prototype = 
-{
-
 }
 
 //A square of two tris

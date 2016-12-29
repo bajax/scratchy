@@ -1,6 +1,9 @@
-const Canvas   = require('./Canvas');
-const Presence = require('./Presence');
-const E        = require('../../shared/event_types').COORDINATOR;
+'use strict';
+const Canvas      = require('./Canvas');
+const Presence    = require('./Presence');
+const E           = require('../../shared/event_types').COORDINATOR;
+const ez_dispatch = require('../../shared/utils/ez_dispatch');
+const ez_respond  = require('../../shared/utils/ez_respond');
 
 /**
  * Client-side version of the server coordinator.
@@ -11,17 +14,15 @@ module.exports = function ClientCoordinator (params)
 		return new ClientCoordinator(params);
 	const self = this;
 
-	const w = params.window;
-	const h = params.canvas;
+	ez_dispatch(self, E);
 
-	require('../../shared/utils/traitEZDispatcher')(self);
-	require('../../shared/utils/traitEZDispatcher')(w);
-	require('../../shared/utils/traitEZDispatcher')(h);
+	const w = ez_dispatch(params.window);
+	const h = ez_dispatch(params.canvas);	
 
-	require('../../shared/utils/traitResponder')(self, 
+	ez_respond(self, 
 	[
-		[self, E.JOIN,            onJoin,           ],
-		[self, E.PART,            onPart,           ],
+		[w, 'beforeunload', onDestruct, ],
+	
 		[self, E.STROKE_ADD,      onStrokeAdd,      ],
 		[self, E.CLEAR_CANVAS,    onClearCanvas,    ],
 		[self, E.PUBLISH_HANDLES, onPublishHandles, ],
@@ -84,7 +85,6 @@ module.exports = function ClientCoordinator (params)
 	 */
 	function onConstruct () 
 	{
-		alert('here');
 		Canvas(
 		{
 			coordinator : self,
@@ -95,6 +95,8 @@ module.exports = function ClientCoordinator (params)
 		{
 			coordinator : self,
 		});
+		self.off(E.CONSTRUCT, onConstruct);
+		self.emit(E.CONSTRUCT);
 	}
 	/**
 	 * Execution has ended, destroy everything and send user back to initial screen.
@@ -103,11 +105,4 @@ module.exports = function ClientCoordinator (params)
 	{
 		self.allOff();
 	}
-
-
-};
-
-module.exports.prototype = 
-{
-	E : E,
 };
