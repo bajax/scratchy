@@ -92,12 +92,9 @@ module.exports = function ClientCoordinator (params)
 	 */
 	function onConstruct () 
 	{
-		let cb = (...args) => self.emit(E.CONSUME_HANDLES, ...args);
-		self.on(E.PUBLISH_HANDLES, cb);
-		self.emit(E.PUBLISH_HANDLES, {});
-		self.off(E.PUBLISH_HANDLES, cb);
+		self.emitThen(E.PUBLISH_HANDLES, (...args) => self.emit(E.CONSUME_HANDLES, ...args), {});
 	}
-	
+
 	/**
 	 * Execution has ended, destroy everything and send user back to initial screen.
 	 */
@@ -108,12 +105,14 @@ module.exports = function ClientCoordinator (params)
 
 
 	self.allOn();
+
 	Canvas(
 	{
 		coordinator : self,
 		html_target : h,
 		window      : w,
 	});
+	
 	Presence(
 	{
 		coordinator : self,
