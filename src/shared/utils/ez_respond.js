@@ -1,7 +1,7 @@
 /**
  * Adds all the events for the given object, along with allOn and allOff methods.
  */ 
-module.exports = function traitResponder(object, events)
+module.exports = function ez_respond(responder, events)
 {
 	/**
 	 * Register all events.
@@ -19,6 +19,8 @@ module.exports = function traitResponder(object, events)
 		events.forEach(event => event[0].off(event[1], event[2]));
 	}
 
-	object.allOn  = allOn;
-	object.allOff = allOff;
+	responder.allOn  = allOn;
+	responder.allOff = allOff;
+
+	return responder;
 };

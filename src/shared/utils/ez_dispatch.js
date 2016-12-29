@@ -8,8 +8,11 @@ const EventEmitter = require('events');
  * backend to manage events.
  * TODO: Work with more event dispatcher types (i.e. window
  */ 
-module.exports = function traitEZDispatcher(dispatcher)
+module.exports = function ez_dispatch(dispatcher, events)
 {
+	if (events)
+		dispatcher.E = events;
+
 	if (!dispatcher.addEventListener)
 	{
 		const e = new EventEmitter();
@@ -31,4 +34,6 @@ module.exports = function traitEZDispatcher(dispatcher)
 		dispatcher.off  = (...args) => dispatcher.removeListener(...args);
 		dispatcher.dump = (...args) => dispatcher.removeAllListeners(...args);
 	}
+
+	return dispatcher;
 };
