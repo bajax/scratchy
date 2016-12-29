@@ -29,8 +29,7 @@ module.exports = function ez_dispatch(dispatcher, events)
 	else
 	{
 		//TODO: might need to expand this thing's scope to cover more bases.
-		dispatcher.emit = (...args) => dispatcher.emit(...args);
-		dispatcher.on   = (...args) => dispatcher.on(...args);
+		dispatcher.on   = (...args) => dispatcher.addEventListener(...args);
 		dispatcher.off  = (...args) => dispatcher.removeListener(...args);
 		dispatcher.dump = (...args) => dispatcher.removeAllListeners(...args);
 	}
