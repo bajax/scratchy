@@ -31,8 +31,6 @@ module.exports = function ClientCoordinator (params)
 		[self, E.DESTRUCT,        onDestruct,       ],
 	]);
 
-	self.allOn();
-
 	//went ahead and stubbed out all of the functions, even though I don't know if I'll use them all in this object yet.
 
 	/**
@@ -85,18 +83,6 @@ module.exports = function ClientCoordinator (params)
 	 */
 	function onConstruct () 
 	{
-		Canvas(
-		{
-			coordinator : self,
-			html_target : h,
-			window      : w,
-		});
-		Presence(
-		{
-			coordinator : self,
-		});
-		self.off(E.CONSTRUCT, onConstruct);
-		self.emit(E.CONSTRUCT);
 	}
 	/**
 	 * Execution has ended, destroy everything and send user back to initial screen.
@@ -105,4 +91,19 @@ module.exports = function ClientCoordinator (params)
 	{
 		self.allOff();
 	}
+
+
+	self.allOn();
+	Canvas(
+	{
+		coordinator : self,
+		html_target : h,
+		window      : w,
+	});
+	Presence(
+	{
+		coordinator : self,
+	});
+
+	
 };
