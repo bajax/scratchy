@@ -3,8 +3,6 @@ module.exports =
 {
 	COORDINATOR : Enum(
 	[
-		'JOIN',
-		'PART',
 		'STROKE_ADD',
 		'CLEAR_CANVAS',
 		'PUBLISH_HANDLES',
