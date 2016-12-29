@@ -25,9 +25,6 @@ module.exports = function ClientCoordinator (params)
 	ez_respond(self, 
 	[
 		[w, 'beforeunload', onDestruct, ],
-	
-		[self, E.STROKE_ADD,      onStrokeAdd,      ],
-		[self, E.CLEAR_CANVAS,    onClearCanvas,    ],
 		[self, E.PUBLISH_HANDLES, onPublishHandles, ],
 		[self, E.CONSUME_HANDLES, onConsumeHandles, ],
 		[self, E.CONSTRUCT,       onConstruct,      ],
@@ -35,36 +32,6 @@ module.exports = function ClientCoordinator (params)
 	]);
 
 	//went ahead and stubbed out all of the functions, even though I don't know if I'll use them all in this object yet.
-
-	/**
-	 * Set up a presence for a new user on the canvas
-	 */
-	function onJoin () 
-	{
-
-	}
-	/**
-	 * Remove a presence from the room, or respond to a Kick.
-	 */
-	function onPart () 
-	{
-
-	}
-	/**
-	 * Add a stroke to the canvas.
-	 */
-	function onStrokeAdd () 
-	{
-
-	}
-
-	/**
-	 * Basically, this event is just relayed to the canvas, but it's kept for consistency
-	 */
-	function onClearCanvas () 
-	{
-
-	}
 
 	/** 
 	 * Events that register with this event in the dispatcher will send out handles to themselves on this event.
@@ -83,6 +50,7 @@ module.exports = function ClientCoordinator (params)
 	{
 		if (handles.canvas)
 			canvas = handles.canvas;
+
 		if (handles.presence)
 			presence = handles.presence;
 	}
@@ -112,7 +80,7 @@ module.exports = function ClientCoordinator (params)
 		html_target : h,
 		window      : w,
 	});
-	
+
 	Presence(
 	{
 		coordinator : self,

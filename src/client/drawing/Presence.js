@@ -16,8 +16,13 @@ module.exports = function Presence (params)
 
 	const c = params.coordinator;
 	let s;
+	let h;
+	let w;
+
 	let events = 
 	[
+		[c, c.E.PUBLISH_HANDLES, onConstruct, ],
+		[c, c.E.CONSUME_HANDLES, onConstruct, ],
 		[c, c.E.CONSTRUCT, onConstruct, ],
 		[c, c.E.DESTRUCT,  onDestruct,  ],
 
@@ -31,7 +36,6 @@ module.exports = function Presence (params)
 		[self, E.JOIN,         onJoin,        ],
 		[self, E.PART,         onPart,        ],
 		[self, E.KICK,         onKick,        ],
-
 	];
 	let remote_events;
 	ez_dispatch(self, E);
@@ -39,6 +43,27 @@ module.exports = function Presence (params)
 	self.allOn();
 
 	let connected = false;
+
+	/** 
+	 * Events that register with this event in the dispatcher will send out handles to themselves on this event.
+	 */
+	function onPublishHandles (handles)
+	{
+		handles.presence = self;
+	}
+
+	/**
+	 * Signifies that all the handles registered in onPublishHandles are good to go, clients can consume them now.
+	 */
+	function onConsumeHandles (handles) 
+	{
+		if (handles.canvas)
+			canvas = handles.canvas;
+		if (handles.html_target)
+			h = handles.html_target;
+		if (handles.window)
+			w = handles.window;
+	}
 
 	function onConstruct()
 	{
@@ -88,6 +113,7 @@ module.exports = function Presence (params)
 	{
 		self.appendToEventsAndActivate(
 		[
+			[s, 'disconnect',   remoteDisconnect,  ],
 			[s, E.REPOSITION,   remoteReposition,  ],
 			[s, E.PEN_DOWN,     remotePenDown,     ],
 			[s, E.PEN_MOVE,     remotePenMove,     ],
@@ -101,7 +127,10 @@ module.exports = function Presence (params)
 		]);
 		this.connected = true;
 	}
-	
+	function remoteDisconnect ()
+	{
+	}
+
 	function remoteReposition () 
 	{
 
@@ -143,5 +172,5 @@ module.exports = function Presence (params)
 
 	}
 
-	Object.defineProperty(self, 'connected', { get:()=>connected });
+	Object.defineProperty(self, 'connected', { get: ()=>connected });
 }

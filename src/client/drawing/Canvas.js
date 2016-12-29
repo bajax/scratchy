@@ -18,6 +18,7 @@ module.exports = function Canvas (params)
 
 	const c = params.coordinator;
 	const h = params.html_target;
+	let presence;
 
 	const gl            = twgl.getWebGLContext(h);
 	const canvas_buffer = twgl.createBufferInfoFromArrays(gl, {position:SQUARE});
@@ -28,9 +29,11 @@ module.exports = function Canvas (params)
 
 	ez_respond(self,
 	[
-		[c, c.E.CLEAR_CANVAS, onClearCanvas ],
-		[c, c.E.STROKE_ADD,   receiveStroke ],
-		[c, c.E.DESTRUCT,     destruct      ],
+		[c, c.E.CLEAR_CANVAS,    onClearCanvas    ],
+		[c, c.E.STROKE_ADD,      receiveStroke    ],
+		[c, c.E.PUBLISH_HANDLES, onPublishHandles ],
+		[c, c.E.CONSUME_HANDLES, onConsumeHandles ],
+		[c, c.E.DESTRUCT,        destruct         ],
 	]);
 
 	/**
@@ -60,6 +63,23 @@ module.exports = function Canvas (params)
 
 		twgl.drawBufferInfo(gl, gl.TRIANGLES, canvas_buffer);
 
+	}
+
+	/** 
+	 * Events that register with this event in the dispatcher will send out handles to themselves on this event.
+	 */
+	function onPublishHandles (handles)
+	{
+		handles.canvas = self;
+	}
+
+	/**
+	 * Signifies that all the handles registered in onPublishHandles are good to go, clients can consume them now.
+	 */
+	function onConsumeHandles (handles) 
+	{
+		if (handles.presence)
+			presence = handles.presence;
 	}
 
 	/**
