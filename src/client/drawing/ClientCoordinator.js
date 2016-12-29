@@ -17,7 +17,10 @@ module.exports = function ClientCoordinator (params)
 	ez_dispatch(self, E);
 
 	const w = ez_dispatch(params.window);
-	const h = ez_dispatch(params.canvas);	
+	const h = ez_dispatch(params.canvas);
+
+	let canvas;
+	let presence;
 
 	ez_respond(self, 
 	[
@@ -66,24 +69,35 @@ module.exports = function ClientCoordinator (params)
 	/** 
 	 * Events that register with this event in the dispatcher will send out handles to themselves on this event.
 	 */
-	function onPublishHandles () 
+	function onPublishHandles (handles)
 	{
-
+		handles.coordinator = self;
+		handles.html_target = h;
+		handles.window      = w;
 	}
 
 	/**
 	 * Signifies that all the handles registered in onPublishHandles are good to go, clients can consume them now.
 	 */
-	function onConsumeHandles () 
+	function onConsumeHandles (handles) 
 	{
-
+		if (handles.canvas)
+			canvas = handles.canvas;
+		if (handles.presence)
+			presence = handles.presence;
 	}
+
 	/** 
 	 * Called when it's time to link the program and get ready to run.
 	 */
 	function onConstruct () 
 	{
+		let cb = (...args) => self.emit(E.CONSUME_HANDLES, ...args);
+		self.on(E.PUBLISH_HANDLES, cb);
+		self.emit(E.PUBLISH_HANDLES, {});
+		self.off(E.PUBLISH_HANDLES, cb);
 	}
+	
 	/**
 	 * Execution has ended, destroy everything and send user back to initial screen.
 	 */
@@ -105,5 +119,5 @@ module.exports = function ClientCoordinator (params)
 		coordinator : self,
 	});
 
-	
+
 };

@@ -34,5 +34,13 @@ module.exports = function ez_dispatch(dispatcher, events)
 		dispatcher.dump = (...args) => dispatcher.removeAllListeners(...args);
 	}
 
+	function emitThen(ev, func, ...args)
+	{
+		dispatcher.emit(ev, ...args);
+		func(...args);
+	}
+
+	dispatcher.emitThen = emitThen;
+
 	return dispatcher;
 };
