@@ -1,59 +1,38 @@
 'use strict';
-const twgl = require('twgl');
+const twgl = require('twgl.js');
 const vs   = require('../shaders/flat.vert');
 const fs   = require('../shaders/brushes/binary.frag');
-
-//TODO: Decide if I want to 
 
 /**
  * Represents a client-side canvas--manages the GL graphics context, and UI events.
  * TODO: Get rid of all calls that require the new operator in my code.
  * TODO: Implement layers
  */
-module.exports = function Canvas (params, c)
+module.exports = function Canvas (params)
 {
-	const self = {};
-	
-	const htelement = params.canvas;
+	if (new.target !== Canvas)
+		return new Canvas(params);
+	var self = this;
 
-	const gl            = twgl.getWebGLContext(canvas);
+	const c = params.coordinator;
+	const h = params.html_target;
+
+	const gl            = twgl.getWebGLContext(h);
 	const canvas_buffer = twgl.createBufferInfoFromArrays(gl, {position:SQUARE});
 	const stroke_buffer = twgl.createBufferInfoFromArrays(gl, {position:SQUARE});;
 	const program       = twgl.createProgramFromSources(gl, [vs(), fs()]);
 	const program_info  = twgl.createProgramInfoFromProgram(gl, program);
-
 	const strokes       = [];
-	/**
-	 * Define all of this object's events in one place, to avoid future bugs 
-	 * eg forgetting to unregister them.
-	 * 0 = which emitter receives the event
-	 * 1 = the event's ID
-	 * 2 = the function to run
-	 * TODO: Is it possible to make this, allOn and allOff a decorator or something? 
-	 * Is that even worth doing?
-	 */
-	var events = 
+
+	require('../../shared/utils/traitResponder')(self,
 	[
 		[c, c.E.CLEAR_CANVAS, onClearCanvas ],
 		[c, c.E.STROKE_ADD,   receiveStroke ],
-		[c, c.E.DESTRUCT,     allOff        ],
-	];
+		[c, c.E.DESTRUCT,     destruct      ],
+	]);
 
-	/**
-	 * Register all events.
-	 */
-	function allOn()
-	{
-		events.forEach(event => event[0].on(event[1], event[2]));
-	}
+	require('../../shared/utils/traitEZDispatcher')(h);
 
-	/**
-	 * Unregister all events.
-	 */
-	function allOff()
-	{	
-		events.forEach(event => event[0].off(event[1], event[2]));
-	}
 
 	/**
 	 * Clears strokes, and the canvas buffers.
@@ -92,33 +71,12 @@ module.exports = function Canvas (params, c)
 		strokes.push(stroke);
 	}
 
-	/**
-	 * Pen down -- used to draw a stroke while you draw it.
-	 * might be later abstracted to accept other users strokes in progress, depending
-	 * on performance concerns.
-	 * In-progress strokes are always going to be weird-- whoever lets up last will 
-	 * ALWAYS come out on top.  The amount of work required to get in-progress blending
-	 * makes so little sense to do.  It would amount to a cute trick at best.
-	 */
-	 function penDown ()
-	 {
-
-	 }
-
  	/**
-	 * Pen move
+	 * Destruct
 	 */
-	 function penMove ()
+	 function destruct ()
 	 {
-
-	 }
-
- 	/**
-	 * Pen up
-	 */
-	 function penUp ()
-	 {
-
+	 	self.allOff();
 	 }
 
 	 /**
@@ -128,6 +86,8 @@ module.exports = function Canvas (params, c)
 	{
 		global.canvas = self;
 	}
+
+	self.allOn();
 
 	return self;
 }

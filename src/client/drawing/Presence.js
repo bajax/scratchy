@@ -2,19 +2,20 @@
  * Represents the presence of a user in a room.  Talks directly to a websocket 
  * for the individual user.
  */
-const EVENTS = require('../../shared/event_types').PRESENCE;
+const E = require('../../shared/event_types').PRESENCE;
 
-module.exports = function Presence (params, c)
+module.exports = function Presence (params)
 {
+	if (new.target !== Presence)
+		return new Presence(params);
 	const self = this;
 	
-	var connected = false;
-
+	let connected = false;
 	Object.defineProperty(self, 'connected', { get:()=>connected });
 
 }
 
 module.exports.prototype = 
 {
-	E : EVENTS,
+	E : E,
 }

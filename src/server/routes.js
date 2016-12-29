@@ -27,6 +27,14 @@ function routes (router)
 			});
 	});
 
+	router.get('/draw', (req, res, next) =>
+	{
+		res.render('draw', 
+			{
+				title : 'Drawing Test',
+			});
+	});
+
 	router.get('/tools_test', (req, res, next) =>
 	{
 		res.render('tools_test', 
