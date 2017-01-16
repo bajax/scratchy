@@ -1,4 +1,5 @@
 var config;
+
 module.exports = (_config) =>
 {
 	config = _config;
@@ -7,17 +8,23 @@ module.exports = (_config) =>
 
 function sockets (io)
 {
-	io.on('connection', (socket) => 
+	/*io.on('connection', (socket) =>
 	{
 		console.log('a user connected');
 		socket.on('disconnect', socket => console.log('a user disconnected'));
+	});
+	*/
 
-		socket.on('test', () => console.log('test from client'));
+	io.of('/chat').on('connection', (socket) =>
+	{
+		console.log('a drawer connected');
+		socket.on('disconnect', socket => console.log('a drawer disconnected'));
 
-		setInterval(() => 
-		{
-			socket.emit('test');
-		}, 1000 * 2);
+	});
+	io.of('/draw').on('connection', (socket) =>
+	{
+		console.log('a drawer connected');
+		socket.on('disconnect', socket => console.log('a drawer disconnected'));
 
 	});
 }
