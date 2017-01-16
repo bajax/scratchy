@@ -122,16 +122,16 @@ module.exports = function server(config)
 		}
 	});
 
-	server.on('listening', function on_listening () 
+	server.run = () => 
 	{
-		var addr = server.address();
-		var bind = typeof addr === 'string'
-			? 'pipe ' + addr
-			: 'port ' + addr.port;
-		debug('Listening on ' + bind);
-	});
-	
+		server.on('listening', function on_listening () 
+		{
+			var addr = server.address();
+			var bind = typeof addr === 'string'
+				? 'pipe ' + addr
+				: 'port ' + addr.port;
+			debug('Listening on ' + bind);
+		});
+	}	
 	return server;
-
-
 }

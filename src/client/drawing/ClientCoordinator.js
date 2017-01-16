@@ -1,9 +1,9 @@
 'use strict';
-const Canvas      = require('./Canvas');
-const Presence    = require('./Presence');
-const E           = require('../../shared/event_types').COORDINATOR;
-const ez_dispatch = require('../../shared/utils/ez_dispatch');
-const ez_respond  = require('../../shared/utils/ez_respond');
+const Canvas      = require('client/drawing/Canvas');
+const Presence    = require('client/drawing/Presence');
+const E           = require('shared/event_types').COORDINATOR;
+const ez_dispatch = require('shared/utils/ez_dispatch');
+const ez_respond  = require('shared/utils/ez_respond');
 
 /**
  * Client-side version of the server coordinator.

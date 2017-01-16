@@ -1,8 +1,8 @@
 'use strict';
-const E           = require('../../shared/event_types').PRESENCE;
 const socket      = require('socket.io-client');
-const ez_dispatch = require('../../shared/utils/ez_dispatch');
-const ez_respond  = require('../../shared/utils/ez_respond');
+const E           = require('shared/event_types').PRESENCE;
+const ez_dispatch = require('shared/utils/ez_dispatch');
+const ez_respond  = require('shared/utils/ez_respond');
 
 /**
  * Represents the presence of a user in a room.  Talks directly to a websocket 
