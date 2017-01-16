@@ -16,11 +16,14 @@ module.exports = function ClientCoordinator (params)
 
 	ez_dispatch(self, E);
 
-	const w = ez_dispatch(params.window);
-	const h = ez_dispatch(params.canvas);
+	const w      = ez_dispatch(params.window);
+	const h      = ez_dispatch(params.canvas);
+	const Socket = params.Socket;
+	
 
 	let canvas;
 	let presence;
+
 
 	ez_respond(self, 
 	[
@@ -84,6 +87,7 @@ module.exports = function ClientCoordinator (params)
 	Presence(
 	{
 		coordinator : self,
+		Socket      : Socket,
 	});
 
 

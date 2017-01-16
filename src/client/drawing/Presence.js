@@ -1,5 +1,4 @@
 'use strict';
-const socket      = require('socket.io-client');
 const E           = require('shared/event_types').PRESENCE;
 const ez_dispatch = require('shared/utils/ez_dispatch');
 const ez_respond  = require('shared/utils/ez_respond');
@@ -14,17 +13,21 @@ module.exports = function Presence (params)
 		return new Presence(params);
 	const self = this;
 
-	const c = params.coordinator;
+	const c      = params.coordinator;
+	const Socket = params.Socket;
+
 	let s;
+	let s2;
 	let h;
 	let w;
+	let canvas;
 
 	let events = 
 	[
-		[c, c.E.PUBLISH_HANDLES, onConstruct, ],
-		[c, c.E.CONSUME_HANDLES, onConstruct, ],
-		[c, c.E.CONSTRUCT, onConstruct, ],
-		[c, c.E.DESTRUCT,  onDestruct,  ],
+		[c, c.E.PUBLISH_HANDLES, onPublishHandles, ],
+		[c, c.E.CONSUME_HANDLES, onConsumeHandles, ],
+		[c, c.E.CONSTRUCT,       onConstruct,      ],
+		[c, c.E.DESTRUCT,        onDestruct,       ],
 
 		[self, E.REPOSITION,   onReposition,  ],
 		[self, E.PEN_DOWN,     onPenDown,     ],
@@ -67,7 +70,7 @@ module.exports = function Presence (params)
 
 	function onConstruct()
 	{
-		s = socket();
+		s = Socket();
 		self.appendToEventsAndActivate([[s, 'connect', remoteConnect]]);
 	}
 
